@@ -111,68 +111,52 @@ export default function NewEvent(props) {
 				return false;
 			}
 
-			console.log(`Decision date valid`);
 			return true;
 		}
 
-		console.groupCollapsed(`Running form validation...`);
 		if (
 			validateEventName() &&
 			validateEventDateTime() &&
 			validateDecisionDeadline()
 		) {
-			console.groupEnd(`valid form`);
 			return true;
 		} else {
 			console.error(`Validation failed`);
 			setShowError(true);
-			console.groupEnd(`End validation`);
 			return false;
 		}
 	}
 
 	async function createEvent() {
-		console.groupCollapsed(`createEvent()`);
 		try {
-			console.log(`try creating event`);
-
 			// Step1: Create the event
-			console.log(`Step1: create event`);
 			const createEventUrl = `${baseUrl}/event`;
 			const createdEvent = await axios.post(
 				createEventUrl,
 				formData,
 				authConfig
 			);
-			console.log(`response for creating event`, createdEvent);
 			setEvent(createdEvent.data);
 
 			// Step2: Return rests by zip
-			console.log(`Step2: Get restaurants by zipcode`);
 			const fetchRestsUrl = `${baseUrl}/restaurant/zipcode/${createdEvent.data.zipCode}`;
 			const restaurantList = await axios.get(fetchRestsUrl, authConfig);
-			console.log(`response for getting rests:`, restaurantList);
 
 			// Step3: Create event_restaurant rows
-			console.groupCollapsed(`Step3: create event_restaurant rows`);
 			const createEventRestRowUrl = `${baseUrl}/voting`;
 			for (const rest of restaurantList.data) {
 				const restRowBody = {
 					eventId: createdEvent.data.eventId,
 					restaurantId: rest.restaurantId,
 				};
-				console.log(`creating event_rest row for `, restRowBody);
 				const resp = await axios.post(
 					createEventRestRowUrl,
 					restRowBody,
 					authConfig
 				);
-				console.log(`Post attempt rest ${rest.restaurantId} success:`, resp);
 			}
-			console.groupEnd();
 
 			// Step4: Add event guests links
-			console.groupCollapsed(`Step4: add guest links for each guest`);
 			const guestLinkUrl = `${baseUrl}/guest`;
 			const guestLinkBody = {
 				guestId: 0,
@@ -180,22 +164,15 @@ export default function NewEvent(props) {
 				guestLink: '',
 			};
 			for (let i = 0; i < createdEvent.data.numberOfGuests; i++) {
-				console.log(`Guest link ${i}/${createdEvent.data.numberOfGuests}`);
 				const resp = await axios.post(guestLinkUrl, guestLinkBody, authConfig);
-				console.log(`response:`, resp);
 			}
 			setAreGuestLinksCreated(true);
-			console.groupEnd(`Done creating guest links`);
 
 			// Step5: return guest list
-			console.log(`Step5: return guest list`);
 			const guestListUrl = `${baseUrl}/guest/list/${createdEvent.data.eventId}`;
 			const guestList = await axios.get(guestListUrl, authConfig);
-			console.log(`guest list:`, guestList.data);
 
 			// Step6: Add vote trackers
-			console.log(`Step6: Add vote trackers`);
-			console.groupCollapsed(`Adding vote trackers`);
 			const voteTrackerUrl = `${baseUrl}/voted`;
 			for (const guest of guestList.data) {
 				for (const rest of restaurantList.data) {
@@ -209,18 +186,12 @@ export default function NewEvent(props) {
 						voteTrackerBody,
 						authConfig
 					);
-					console.log(`response`, resp);
 				}
 			}
-			console.groupEnd(`Done adding vote trackers`);
-
-			console.groupEnd();
-			console.log(`event created succesfully`, createdEvent);
 			setIsEventCreated(true);
 		} catch (error) {
 			console.error(`event creation failed`, error);
 		}
-		console.groupEnd();
 	}
 
 	return (

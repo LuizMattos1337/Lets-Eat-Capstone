@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from "react";
-import RestaurantRow from "./RestaurantRow";
-import { Table } from "react-bootstrap";
-import { useUser } from "../UserProvider/UserProvider";
-import axios from "axios";
-import { baseUrl } from "../../Shared/baseUrl";
+import React, { useState, useEffect } from 'react';
+import RestaurantRow from './RestaurantRow';
+import { Table } from 'react-bootstrap';
+import { useUser } from '../UserProvider/UserProvider';
+import axios from 'axios';
+import { baseUrl } from '../../Shared/baseUrl';
 
 export default function RestaurantsView(props) {
 	const [isLoading, setIsLoading] = useState(false);
@@ -19,14 +19,11 @@ export default function RestaurantsView(props) {
 
 	useEffect(() => {
 		/* Effects */
-		console.log(
-			`Effect - Fetching restaurant list for ${mode}: ${searchTerm}`,
-			`with jwt:${user.token}`
-		);
-		if (mode === "byEventId" || mode === "byEventIdFinalist") {
+
+		if (mode === 'byEventId' || mode === 'byEventIdFinalist') {
 			fetchRestaurantsByEventId();
 		}
-		if (mode === "byZipcode") {
+		if (mode === 'byZipcode') {
 			fetchRestaurantsByZipcode();
 		}
 		return () => {
@@ -35,7 +32,6 @@ export default function RestaurantsView(props) {
 	}, []);
 
 	async function fetchRestaurantsByEventId() {
-		console.log(`Fetching ${mode} ${searchTerm}`);
 		try {
 			setIsLoading(true);
 			const resp = await axios.get(
@@ -43,31 +39,29 @@ export default function RestaurantsView(props) {
 			);
 			setRestaurants(resp.data);
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 			setIsLoading(false);
 		}
 	}
 	async function fetchRestaurantsByZipcode() {
-		console.log(`Fetching ${mode} ${searchTerm}`);
 		try {
 			setIsLoading(true);
 			const resp = await axios.get(
 				`${baseUrl}/restaurant/zipcode/${searchTerm}`,
 				authConfig
 			);
-			console.log(`byZipcode`, resp.data);
 			setRestaurants(resp.data);
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 			setIsLoading(false);
 		}
 	}
 
 	return (
 		<>
-			<small className="dev-mode">{JSON.stringify(props)}</small>
-			<Table bordered className="restaurants-view">
-				<tbody className="">
+			<small className='dev-mode'>{JSON.stringify(props)}</small>
+			<Table bordered className='restaurants-view'>
+				<tbody className=''>
 					{generateRestaurantElements(
 						restaurants,
 						mode,
@@ -117,13 +111,13 @@ const exampleRestaurants = [
 	{
 		restaurantId: 0,
 		pictureUrl:
-			"https://www.pexels.com/photo/close-up-photo-of-rice-and-tacos-2087748/",
-		restaurantName: "",
-		restaurantGenre: "",
-		restaurantAddress: "",
+			'https://www.pexels.com/photo/close-up-photo-of-rice-and-tacos-2087748/',
+		restaurantName: '',
+		restaurantGenre: '',
+		restaurantAddress: '',
 		zipCode: 99999,
-		openTime: "11:00:00",
-		closeTime: "23:00:00",
+		openTime: '11:00:00',
+		closeTime: '23:00:00',
 		priceRange: 1,
 		hasNumber: true,
 	},

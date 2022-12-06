@@ -1,22 +1,21 @@
-import React, { useState } from "react";
-import { Button, FloatingLabel, Form, Modal, Image } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { baseUrl } from "../../Shared/baseUrl";
-import logo from "../LetsEatLogo.png";
-
+import React, { useState } from 'react';
+import { Button, FloatingLabel, Form, Modal, Image } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { baseUrl } from '../../Shared/baseUrl';
+import logo from '../LetsEatLogo.png';
 
 export default function Register() {
 	const [formData, setFormData] = useState({
-		username: "",
-		password: "",
-		confirmPassword: "",
+		username: '',
+		password: '',
+		confirmPassword: '',
 	});
 	const [showError, setShowError] = useState(false);
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [showSuccess, setShowSuccess] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 
 	function validateFormData() {
 		/**
@@ -50,9 +49,9 @@ export default function Register() {
 			return false;
 		}
 
-		if (formData.username.length < 6){
-			setErrorMessage(`Username must be at least 6 characters in length`)
-			return false
+		if (formData.username.length < 6) {
+			setErrorMessage(`Username must be at least 6 characters in length`);
+			return false;
 		}
 
 		return true;
@@ -80,18 +79,14 @@ export default function Register() {
 			setIsLoading(true);
 			const registrationData = {
 				...formData,
-				role: "USER",
+				role: 'USER',
 			};
-			const resp = await axios.post(
-				baseUrl + `/register`,
-				registrationData
-			);
-			console.log(resp);
+			const resp = await axios.post(baseUrl + `/register`, registrationData);
 			setShowSuccess(true);
 		} catch (error) {
-			console.log(error.toJSON());
+			console.error(error.toJSON());
 			if (error.response) {
-				console.log(error.response.data);
+				console.error(error.response.data);
 				setErrorMessage(error.response.data.message);
 			} else {
 				setErrorMessage(null);
@@ -103,80 +98,79 @@ export default function Register() {
 
 	return (
 		<>
-			<div className="box">
-
-				<Form className="d-flex flex-column align-items-center">
+			<div className='box'>
+				<Form className='d-flex flex-column align-items-center'>
 					<Image
 						src={logo}
 						rounded
-						className="m-2"
-						style={{ width: "300px" }}
+						className='m-2'
+						style={{ width: '300px' }}
 					/>
-				<Form className="d-flex flex-column align-items-center" noValidate>
-					<h1 className="display-6">Please Register</h1>
-					<Form.Group controlId="loginUsernameForm">
-						<FloatingLabel className="mb-3" label="Username">
-							<Form.Control
-								id="username"
-								type="text"
-								placeholder="username"
-								onChange={handleFormChange}
-								value={formData.username}
-								required
-							/>
-						</FloatingLabel>
-					</Form.Group>
-					<Form.Group controlId="loginPasswordForms">
-						<FloatingLabel className="mb-3" label="Password">
-							<Form.Control
-								id="password"
-								type="password"
-								required
-								placeholder="password"
-								onChange={handleFormChange}
-								value={formData.password}
-								noValidate
-							/>
-						</FloatingLabel>
-						<FloatingLabel className="mb-3" label="Confirm Password">
-							<Form.Control
-								id="confirmPassword"
-								type="password"
-								required
-								placeholder="Confirm Password"
-								onChange={handleFormChange}
-								value={formData.confirmPassword}
-								noValidate
-							/>
-						</FloatingLabel>
-					</Form.Group>
+					<Form className='d-flex flex-column align-items-center' noValidate>
+						<h1 className='display-6'>Please Register</h1>
+						<Form.Group controlId='loginUsernameForm'>
+							<FloatingLabel className='mb-3' label='Username'>
+								<Form.Control
+									id='username'
+									type='text'
+									placeholder='username'
+									onChange={handleFormChange}
+									value={formData.username}
+									required
+								/>
+							</FloatingLabel>
+						</Form.Group>
+						<Form.Group controlId='loginPasswordForms'>
+							<FloatingLabel className='mb-3' label='Password'>
+								<Form.Control
+									id='password'
+									type='password'
+									required
+									placeholder='password'
+									onChange={handleFormChange}
+									value={formData.password}
+									noValidate
+								/>
+							</FloatingLabel>
+							<FloatingLabel className='mb-3' label='Confirm Password'>
+								<Form.Control
+									id='confirmPassword'
+									type='password'
+									required
+									placeholder='Confirm Password'
+									onChange={handleFormChange}
+									value={formData.confirmPassword}
+									noValidate
+								/>
+							</FloatingLabel>
+						</Form.Group>
 
-					<Form.Text className="mb-3">
-						<Link to="/login"> Already have an account?</Link>
-					</Form.Text>
+						<Form.Text className='mb-3'>
+							<Link to='/login'> Already have an account?</Link>
+						</Form.Text>
 
-					<Button 
-						id="button"
-						className={isLoading && "placeholder-wave"}
-						type="submit"
-						disabled={isLoading}
-						onClick={(event) => handleRegister(event)}
-					>
-						{isLoading ? "Registering..." : "Register"}
-					</Button>
-				</Form>
+						<Button
+							id='button'
+							className={isLoading && 'placeholder-wave'}
+							type='submit'
+							disabled={isLoading}
+							onClick={(event) => handleRegister(event)}
+						>
+							{isLoading ? 'Registering...' : 'Register'}
+						</Button>
+					</Form>
 				</Form>
 			</div>
 			<Modal
-				id="registration-error-popup"
-				size="lg"
+				id='registration-error-popup'
+				size='lg'
 				centered
 				show={showError}
 				onHide={() => setShowError(false)}
-				aria-labelledby="registration-error-popup"
+				aria-labelledby='registration-error-popup'
 			>
 				<Modal.Header closeButton>
-					<Modal.Title id="registration-error-popup">
+					<Modal.Title id='registration-error-popup'>
 						Registration Error
 					</Modal.Title>
 				</Modal.Header>
@@ -191,21 +185,18 @@ export default function Register() {
 			</Modal>
 
 			<Modal
-				id="registration-success-popup"
-				size="lg"
+				id='registration-success-popup'
+				size='lg'
 				centered
 				show={showSuccess}
 				onHide={() => {
 					setShowSuccess(false);
-					navigate('/login')
-					
+					navigate('/login');
 				}}
-				aria-labelledby="registration-success-popup"
+				aria-labelledby='registration-success-popup'
 			>
 				<Modal.Header closeButton>
-					<Modal.Title id="registration-success-popup">
-						Success!
-					</Modal.Title>
+					<Modal.Title id='registration-success-popup'>Success!</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					Registration successful! Redirecting to the login page...

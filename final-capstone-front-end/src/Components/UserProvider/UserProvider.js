@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { Button } from "react-bootstrap";
+import React, { useState, useContext } from 'react';
+import { Button } from 'react-bootstrap';
 import '../../index.css';
 
 const UserContext = React.createContext();
@@ -15,7 +15,7 @@ export function useUserUpdate() {
 export function UserProvider({ children }) {
 	const [user, setUser] = useState({
 		id: undefined,
-		username: "",
+		username: '',
 		authorities: [],
 		token: undefined,
 	});
@@ -23,7 +23,7 @@ export function UserProvider({ children }) {
 	function deleteUser() {
 		const blankUser = {
 			id: null,
-			username: "",
+			username: '',
 			authorities: [],
 			token: undefined,
 		};
@@ -33,7 +33,7 @@ export function UserProvider({ children }) {
 	function makeUser() {
 		const newUser = {
 			id: 1,
-			username: "user",
+			username: 'user',
 			authorities: [],
 			token: 123,
 		};
@@ -52,16 +52,12 @@ export function UserProvider({ children }) {
 		<UserContext.Provider value={user}>
 			<UserUpdateContext.Provider value={updateUser}>
 				{children}
-				<div className="dev-mode">
-					<small>
-						Secret context debug menu that'll be deleted from final
-					</small>
+				<div className='dev-mode'>
+					<small>Secret context debug menu that won't be shown to users</small>
 					<pre>Current context : {JSON.stringify(user, null, 2)}</pre>
 					<Button onClick={makeUser}>Log in</Button>
 					<Button onClick={deleteUser}>Log out</Button>
-					<Button onClick={() => console.log(user)}>
-						Log context
-					</Button>
+					<Button onClick={() => console.log(user)}>Log context</Button>
 				</div>
 			</UserUpdateContext.Provider>
 		</UserContext.Provider>
