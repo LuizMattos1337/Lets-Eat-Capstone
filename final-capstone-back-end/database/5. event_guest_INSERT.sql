@@ -1,0 +1,26 @@
+INSERT INTO public.event_guest(
+	guest_id, event_id, guest_link)
+	VALUES 
+    (1, 1, 'drxhhSrKkZ'),
+    (2, 1, 'OO9G8Mdffs'),
+    (3, 1, 'ChmF9h095Z'),
+    (4, 1, 'brqXDbGuFp'),
+    (5, 1, 'k0Me6LstC4'),
+    (6, 2, 'iWgm99HBjG'),
+    (7, 2, 'qtVfbaybuE'),
+    (8, 2, 'gB97Lmm6oh'),
+    (9, 2, '4lekxIB3Dw'),
+    (10, 3, 'okCN24xllN'),
+    (11, 3, 'i0rmfXoVq9'),
+    (12, 3, 'uXxt726ly8'),
+    (13, 4, 'rlvWifHRxxh'),
+    (14, 4, 'LC1LoKpQRN'),
+    (15, 4, 'WjOtgZoTN4'),
+    (16, 4, 'xy1zwLWt13'),
+    (17, 4, 'Y5TBCRJA5u'),
+    (18, 5, '7vHSoaurRx'),
+    (19, 5, 'XBwyNCWVnb'),
+    (20, 6, 'pluVD1dGP8'),
+    (21, 6, 'MsnmBk66eu'),
+    (22, 6, 'BHQH2aHDAS'),
+    (23, 6, 'bS2MthPVO6');
